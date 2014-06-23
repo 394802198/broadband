@@ -77,11 +77,21 @@ public class DataRestController {
 		
 		List<CustomerOrder> cos = page.getResults();
 		if (cos != null && usages != null) {
-			String vlan = "", svlan = "", cvlan = "";
+			String vlan = "", svlan = "", cvlan = "", type = "";
 			for (CustomerOrder co: cos) {
 				svlan = co.getSvlan() != null ? co.getSvlan().toLowerCase() : "";
 				cvlan = co.getCvlan() != null ? co.getCvlan().toLowerCase() : "";
-				vlan = svlan + "/" + cvlan;
+				type = co.getCod().getDetail_plan_type();
+				if (!"".equals(svlan) && !"".equals(cvlan)) {
+					if ("ADSL".equals(type)) {
+						vlan = "d" + svlan + "/" + String.valueOf(Integer.parseInt(cvlan) + 1600);
+					} else if ("VDSL".equals(type)){
+						vlan = "d" + svlan + "/" + cvlan;
+					} else if ("UFB".equals(type)) {
+						vlan = "u" + svlan + "/" + cvlan;
+					}
+				}
+				
 				for (NetworkUsage u : usages) {
 					if (u.getVlan() != null && vlan.equals(u.getVlan().toLowerCase())) {
 						co.setUsage(u);
@@ -96,20 +106,21 @@ public class DataRestController {
 	}
 	
 	
-	@RequestMapping("/broadband-user/data/customer/usage/view/{svlan}/{cvlan}/{calculator_date}")
+	@RequestMapping("/broadband-user/data/customer/usage/view/{svlan}/{cvlan}/{type}/{calculator_date}")
 	public List<DateUsage> doCustomerUsageView(
 			@PathVariable("svlan") String svlan,
 			@PathVariable("cvlan") String cvlan,
+			@PathVariable("type") String type,
 			@PathVariable("calculator_date") String calculator_date){
 		
 		Calendar c = Calendar.getInstance();
-		
+
 		String[] date_array = calculator_date.split("-");
 		int year = Integer.parseInt(date_array[0]);
 		int month = Integer.parseInt(date_array[1]);
-		
+
 		c.set(Calendar.YEAR, year);
-		c.set(Calendar.MONTH, month-1);
+		c.set(Calendar.MONTH, month - 1);
 		
 		int days = TMUtils.judgeDay(year, month);
 
@@ -124,8 +135,16 @@ public class DataRestController {
 		}
 		
 		NetworkUsage u = new NetworkUsage();
+		String vlan = "";
 		u.getParams().put("where", "query_currentMonth");
-		u.getParams().put("vlan", svlan + "/" + cvlan);
+		if ("ADSL".equals(type)) {
+			vlan = "d" + svlan + "/" + String.valueOf(Integer.parseInt(cvlan) + 1600);
+		} else if ("VDSL".equals(type)){
+			vlan = "d" + svlan + "/" + cvlan;
+		} else if ("UFB".equals(type)) {
+			vlan = "u" + svlan + "/" + cvlan;
+		}
+		u.getParams().put("vlan", vlan);
 		u.getParams().put("currentYear", year);
 		u.getParams().put("currentMonth", month);
 		

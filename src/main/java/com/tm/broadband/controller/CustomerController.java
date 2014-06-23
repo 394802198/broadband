@@ -899,22 +899,24 @@ public class CustomerController {
 		letterCirs.add(new CallInternationalRate("X"));
 		letterCirs.add(new CallInternationalRate("Y"));
 		letterCirs.add(new CallInternationalRate("Z"));
-		letterCirs.add(new CallInternationalRate(""));
+		letterCirs.add(new CallInternationalRate("Other"));
 		
 		List<CallInternationalRate> cirs = this.billingService.queryCallInternationalRatesGroupBy();
 		if (cirs != null) {
 			for (CallInternationalRate cir: cirs) {
 				boolean b = false;
 				for (CallInternationalRate lCir: letterCirs) {
-					if (!"".equals(cir.getArea_name()) &&
-							lCir.getLetter().equals(cir.getArea_name().toUpperCase().charAt(0))) {
+						
+					if (!"".equals(cir.getArea_name())
+							&& lCir.getLetter().equals(String.valueOf(cir.getArea_name().toUpperCase().charAt(0)))) {
+						System.out.println(lCir.getLetter() + ", " + cir.getArea_name().toUpperCase().charAt(0));
 						lCir.getCirs().add(cir);
 						b = true;
 						break;
 					} 
 				}
 				if (!b) {
-					letterCirs.get(letterCirs.size()-1).getCirs().add(cir);
+					letterCirs.get(letterCirs.size() - 1).getCirs().add(cir);
 				}
 			}
 		}

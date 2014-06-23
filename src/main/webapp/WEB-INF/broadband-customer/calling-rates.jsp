@@ -7,10 +7,9 @@
 <jsp:include page="header.jsp" />
 
 <style>
-
 .affix {
 	width: 263px;
-	top: 0;
+	top: 20px;
 }
 .nav-pills>li>a {
 	border-radius: 0px;
@@ -31,6 +30,18 @@
 	background-color: #d9edf7;
 	border-color: #bce8f1;
 }
+
+.pagination>li:first-child>a, 
+.pagination>li:first-child>span {
+	margin-left: -1px;
+	border-bottom-left-radius: 0;
+	border-top-left-radius: 0;
+}
+.pagination>li:last-child>a, 
+.pagination>li:last-child>span {
+	border-bottom-right-radius: 0;
+	border-top-right-radius: 0;
+}
 </style>
 
 <div class="container">
@@ -42,7 +53,7 @@
 					<h4 class="panel-title">International Calling Rates</h4>
 				</div>
 				<c:if test="${fn:length(letterCirs) > 0}">
-					<table class="table">
+					<table class="table table-bordered">
 						<thead>
 							<tr>
 								<th>Country name</th>
@@ -50,49 +61,30 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="lCir" items="letterCirs">
-								<tr>
-									<td>${lCir}</td>
-									<td>&nbsp;</td>
+							<c:forEach var="lCir" items="${letterCirs }">
+								<tr class="active" id="${lCir.letter}">
+									<td colspan="2">${lCir.letter}</td>
 								</tr>
+								<c:forEach var="cir" items="${lCir.cirs }">
+									<tr>
+										<td>${cir.area_name}</td>
+										<td>$ ${cir.rate_cost}</td>
+									</tr>
+								</c:forEach>
 							</c:forEach>
 						</tbody>
 					</table>
 				</c:if>
 			</div>
-			
-			
 		</div>
 		<div class="col-md-3 hidden-xs hidden-sm">
-			 <div class="navbar-example panel panel-default" style="margin-top:40px;" data-spy="affix" data-offset-top="150">
-				<ul class="nav nav-pills nav-stacked">
-					<li class="active"><a href="#introduction">A</a></li>
-					<li class="active"><a href="#introduction">B</a></li>
-					<li class="active"><a href="#introduction">C</a></li>
-					<li class="active"><a href="#introduction">D</a></li>
-					<li class="active"><a href="#introduction">E</a></li>
-					<li class="active"><a href="#introduction">F</a></li>
-					<li class="active"><a href="#introduction">G</a></li>
-					<li class="active"><a href="#introduction">H</a></li>
-					<li class="active"><a href="#introduction">I</a></li>
-					<li class="active"><a href="#introduction">J</a></li>
-					<li class="active"><a href="#introduction">K</a></li>
-					<li class="active"><a href="#introduction">L</a></li>
-					<li class="active"><a href="#introduction">M</a></li>
-					<li class="active"><a href="#introduction">N</a></li>
-					<li class="active"><a href="#introduction">O</a></li>
-					<li class="active"><a href="#introduction">P</a></li>
-					<li class="active"><a href="#introduction">Q</a></li>
-					<li class="active"><a href="#introduction">R</a></li>
-					<li class="active"><a href="#introduction">S</a></li>
-					<li class="active"><a href="#introduction">T</a></li>
-					<li class="active"><a href="#introduction">U</a></li>
-					<li class="active"><a href="#introduction">V</a></li>
-					<li class="active"><a href="#introduction">W</a></li>
-					<li class="active"><a href="#introduction">X</a></li>
-					<li class="active"><a href="#introduction">Y</a></li>
-					<li class="active"><a href="#introduction">Z</a></li>
-					<li class="active"><a href="#introduction">Other</a></li>
+			 <div data-spy="affix" data-offset-top="150"><!-- navbar-example panel panel-default -->
+				<ul class="pagination" style="margin-top:0;"><!-- nav nav-pills nav-stacked -->
+					<c:forEach var="lCir" items="${letterCirs }" varStatus="item">
+						<li class="${item.first ? 'active' : '' }" >
+							<a href="#${lCir.letter }" style="${item.last ? 'width:80px;height:35px;' : 'width:40px;height:35px;'}">${lCir.letter }</a>
+						</li>
+					</c:forEach>
 				</ul>
 			</div>
 		</div>
@@ -103,7 +95,7 @@
 <jsp:include page="script.jsp" />
 <script type="text/javascript">
 (function($){
-	$('body').scrollspy({ target: '.navbar-example' })
+	$('body').scrollspy({ target: '.navbar-example' });
 })(jQuery);
 </script>
 <jsp:include page="footer-end.jsp" />

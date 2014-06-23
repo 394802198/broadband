@@ -161,8 +161,8 @@ public class CRMService {
 		
 		if ("plan-topup".equals(plan.getPlan_group())) {
 			
-			cod_plan.setDetail_is_next_pay(0);
-			cod_plan.setDetail_expired(new Date());
+			//cod_plan.setDetail_is_next_pay(0);
+			//cod_plan.setDetail_expired(new Date());
 			
 			customer.getCustomerOrder().setOrder_total_price(plan.getTopup().getTopup_fee());
 			
@@ -170,8 +170,8 @@ public class CRMService {
 			cod_topup.setDetail_name("Broadband Top-Up");
 			cod_topup.setDetail_price(plan.getTopup().getTopup_fee());
 			cod_topup.setDetail_type("topup");
-			cod_topup.setDetail_is_next_pay(0);
-			cod_topup.setDetail_expired(new Date());
+			//cod_topup.setDetail_is_next_pay(0);
+			//cod_topup.setDetail_expired(new Date());
 			cod_topup.setDetail_unit(1);
 			
 			customer.getCustomerOrder().getCustomerOrderDetails().add(cod_topup);
@@ -181,7 +181,7 @@ public class CRMService {
 			customer.getCustomerOrder().setOrder_total_price(plan.getPlan_price() * plan.getPlan_prepay_months());
 			System.out.println("Order_total_price: " + customer.getCustomerOrder().getOrder_total_price());
 			
-			cod_plan.setDetail_is_next_pay(1);
+			//cod_plan.setDetail_is_next_pay(1);
 			
 		} else if ("plan-term".equals(plan.getPlan_group())) {
 			
@@ -198,8 +198,8 @@ public class CRMService {
 					cod_pstn.setDetail_name("Business Phone Line");
 				}
 				cod_pstn.setDetail_price(0d);
-				cod_pstn.setDetail_is_next_pay(0);
-				cod_pstn.setDetail_expired(new Date());
+				//cod_pstn.setDetail_is_next_pay(0);
+				//cod_pstn.setDetail_expired(new Date());
 				cod_pstn.setDetail_type("pstn");
 				cod_pstn.setDetail_unit(1);
 				cod_pstn.setPstn_number(customer.getCustomerOrder().getTransition_porting_number());
@@ -209,8 +209,8 @@ public class CRMService {
 			CustomerOrderDetail cod_hd = new CustomerOrderDetail();
 			cod_hd.setDetail_name("TP - LINK 150Mbps Wireless N ADSL2+ Modem Router(Free)");
 			cod_hd.setDetail_price(0d);
-			cod_hd.setDetail_is_next_pay(0);
-			cod_hd.setDetail_expired(new Date());
+			//cod_hd.setDetail_is_next_pay(0);
+			//cod_hd.setDetail_expired(new Date());
 			cod_hd.setDetail_unit(1);
 			cod_hd.setIs_post(0);
 			customer.getCustomerOrder().setHardware_post(customer.getCustomerOrder().getHardware_post() == null ? 1 : customer.getCustomerOrder().getHardware_post() + 1);
@@ -229,10 +229,10 @@ public class CRMService {
 			cod_trans.setDetail_name("Broadband Transition");
 			cod_trans.setDetail_price(plan.getTransition_fee());
 			if ("plan-term".equals(plan.getPlan_group())) {
-				cod_trans.setDetail_is_next_pay(1);
+				//cod_trans.setDetail_is_next_pay(1);
 			} else {
-				cod_trans.setDetail_is_next_pay(0);
-				cod_trans.setDetail_expired(new Date());
+				//cod_trans.setDetail_is_next_pay(0);
+				//cod_trans.setDetail_expired(new Date());
 			}
 			cod_trans.setDetail_type("transition");
 			cod_trans.setDetail_unit(1);
@@ -247,10 +247,10 @@ public class CRMService {
 			cod_conn.setDetail_name("Broadband New Connection");
 			cod_conn.setDetail_price(plan.getPlan_new_connection_fee());
 			if ("plan-term".equals(plan.getPlan_group())) {
-				cod_conn.setDetail_is_next_pay(1);
+				//cod_conn.setDetail_is_next_pay(1);
 			} else {
-				cod_conn.setDetail_is_next_pay(0);
-				cod_conn.setDetail_expired(new Date());
+				//cod_conn.setDetail_is_next_pay(0);
+				//cod_conn.setDetail_expired(new Date());
 			}
 			cod_conn.setDetail_type("new-connection");
 			cod_conn.setDetail_unit(1);
@@ -265,10 +265,10 @@ public class CRMService {
 			cod_jackpot.setDetail_name("Broadband New Connection & Phone Jack Installation");
 			cod_jackpot.setDetail_price(plan.getJackpot_fee());
 			if ("plan-term".equals(plan.getPlan_group())) {
-				cod_jackpot.setDetail_is_next_pay(1);
+				//cod_jackpot.setDetail_is_next_pay(1);
 			} else {
-				cod_jackpot.setDetail_is_next_pay(0);
-				cod_jackpot.setDetail_expired(new Date());
+				//cod_jackpot.setDetail_is_next_pay(0);
+				//cod_jackpot.setDetail_expired(new Date());
 			}
 			cod_jackpot.setDetail_type("jackpot");
 			cod_jackpot.setDetail_unit(1);
@@ -282,10 +282,10 @@ public class CRMService {
 			cod_hd.setDetail_name(chd.getHardware_name());
 			cod_hd.setDetail_price(chd.getHardware_price());
 			if ("plan-term".equals(plan.getPlan_group())) {
-				cod_hd.setDetail_is_next_pay(1);
+				//cod_hd.setDetail_is_next_pay(1);
 			} else {
-				cod_hd.setDetail_is_next_pay(0);
-				cod_hd.setDetail_expired(new Date());
+				//cod_hd.setDetail_is_next_pay(0);
+				//cod_hd.setDetail_expired(new Date());
 			}
 			cod_hd.setDetail_unit(1);
 			cod_hd.setIs_post(0);

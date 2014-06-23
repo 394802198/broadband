@@ -99,9 +99,10 @@
 	
 	var svlan = '${co.svlan}';
 	var cvlan = '${co.cvlan}';
+	var type = '${co.cod.detail_plan_type}';
 	
 	function doUsage(date) {
-		var url = '${ctx}/broadband-user/data/customer/usage/view/' + svlan + '/' + cvlan + '/' + date;
+		var url = '${ctx}/broadband-user/data/customer/usage/view/' + svlan + '/' + cvlan + '/' + type + '/' + date;
 		$.get(url, function(list){ console.log(list);
 			dateUsages = list;
 			var obj = {

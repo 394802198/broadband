@@ -136,14 +136,14 @@ public class Test {
 
 		//System.out.println(TMUtils.retrieveMonthAbbrWithDate(TMUtils.parseDateYYYYMMDD("2014-06-09")));
 		
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(new Date());
-		
-		System.out.println(cal.get(Calendar.MONTH));
+//		Calendar cal = Calendar.getInstance();
+//		cal.setTime(new Date());
+//		
+//		System.out.println(cal.get(Calendar.MONTH));
 
 //		System.out.println(TMUtils.retrieveMonthAbbrWithDate(TMUtils.parseDateYYYYMMDD("2014-06-09")));
 		
-
+		System.out.println("A".equals(String.valueOf("abc".toUpperCase().charAt(0))));
 		
 	}
 

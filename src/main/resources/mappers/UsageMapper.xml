@@ -35,7 +35,8 @@
 		, cod.id 					as cod_id
 		, cod.detail_name 			as cod_detail_name
 		, cod.detail_data_flow 		as cod_detail_data_flow
-		, cod.detail_type 			as cod_detail_type
+		, cod.detail_type			as cod_detail_type
+		, cod.detail_plan_type		as cod_detail_plan_type
 	</sql>
 	
 	<resultMap type="CustomerOrder" id="CustomerOrderResultMap">
@@ -64,6 +65,7 @@
 			<result property="detail_name" column="cod_detail_name"/>
 			<result property="detail_data_flow" column="cod_detail_data_flow"/>
 			<result property="detail_type" column="cod_detail_type"/>
+			<result property="detail_plan_type" column="cod_detail_plan_type"/>
 		</association>
 	</resultMap>
 	

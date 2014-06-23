@@ -36,7 +36,7 @@ public class DataController {
 		model.addAttribute("current_date", TMUtils.dateFormatYYYYMMDD(new Date()));
 		return "broadband-user/data/customer-view";
 		
-	}
+	} 
 	
 	@RequestMapping("/broadband-user/data/customer/usage/view/{order_id}")
 	public String toCustomerUsage(Model model,

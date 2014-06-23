@@ -358,7 +358,7 @@ public class CRMController {
 		if ("plan-topup".equals(customerOrder.getPlan().getPlan_group())) {
 			
 			cod_plan.setDetail_type("plan-topup");
-			cod_plan.setDetail_is_next_pay(0);
+			//cod_plan.setDetail_is_next_pay(0);
 			
 			customerOrder.setOrder_total_price(customerOrder.getPlan().getTopup().getTopup_fee());
 			
@@ -366,7 +366,7 @@ public class CRMController {
 			cod_topup.setDetail_name("Broadband Top-Up");
 			cod_topup.setDetail_price(customerOrder.getPlan().getTopup().getTopup_fee());
 			cod_topup.setDetail_type("topup");
-			cod_topup.setDetail_is_next_pay(0);
+			//cod_topup.setDetail_is_next_pay(0);
 			cod_topup.setDetail_unit(1);
 			
 			customerOrder.getCustomerOrderDetails().add(cod_topup);
@@ -376,7 +376,7 @@ public class CRMController {
 			customerOrder.setOrder_total_price(customerOrder.getPlan().getPlan_price() * customerOrder.getPlan().getPlan_prepay_months());
 			
 			cod_plan.setDetail_type("plan-no-term");
-			cod_plan.setDetail_is_next_pay(1);
+			//cod_plan.setDetail_is_next_pay(1);
 			
 		} else if ("plan-term".equals(customerOrder.getPlan().getPlan_group())) {
 			
@@ -392,8 +392,8 @@ public class CRMController {
 			}
 			
 			cod_pstn.setDetail_price(0d);
-			cod_pstn.setDetail_is_next_pay(0);
-			cod_pstn.setDetail_expired(new Date());
+			//cod_pstn.setDetail_is_next_pay(0);
+			//cod_pstn.setDetail_expired(new Date());
 			cod_pstn.setDetail_type("pstn");
 			cod_pstn.setDetail_unit(1);
 			cod_pstn.setPstn_number(customer.getCustomerOrder().getTransition_porting_number());
@@ -403,8 +403,8 @@ public class CRMController {
 			CustomerOrderDetail cod_hd = new CustomerOrderDetail();
 			cod_hd.setDetail_name("TP - LINK 150Mbps Wireless N ADSL2+ Modem Router(Free)");
 			cod_hd.setDetail_price(0d);
-			cod_hd.setDetail_is_next_pay(0);
-			cod_hd.setDetail_expired(new Date());
+			//cod_hd.setDetail_is_next_pay(0);
+			//cod_hd.setDetail_expired(new Date());
 			cod_hd.setDetail_unit(1);
 			cod_hd.setIs_post(0);
 			cod_hd.setDetail_type("hardware-router");
@@ -421,7 +421,7 @@ public class CRMController {
 			CustomerOrderDetail cod_trans = new CustomerOrderDetail();
 			cod_trans.setDetail_name("Broadband Transition");
 			cod_trans.setDetail_price(customerOrder.getPlan().getTransition_fee());
-			cod_trans.setDetail_is_next_pay(0);
+			//cod_trans.setDetail_is_next_pay(0);
 			cod_trans.setDetail_type("transition");
 			cod_trans.setDetail_unit(1);
 			
@@ -434,7 +434,7 @@ public class CRMController {
 			CustomerOrderDetail cod_conn = new CustomerOrderDetail();
 			cod_conn.setDetail_name("Broadband New Connection");
 			cod_conn.setDetail_price(customerOrder.getPlan().getPlan_new_connection_fee());
-			cod_conn.setDetail_is_next_pay(0);
+			//cod_conn.setDetail_is_next_pay(0);
 			cod_conn.setDetail_type("new-connection");
 			cod_conn.setDetail_unit(1);
 			
@@ -447,7 +447,7 @@ public class CRMController {
 			CustomerOrderDetail cod_jackpot = new CustomerOrderDetail();
 			cod_jackpot.setDetail_name("Broadband New Connection & Phone Jack Installation");
 			cod_jackpot.setDetail_price(customerOrder.getPlan().getJackpot_fee());
-			cod_jackpot.setDetail_is_next_pay(0);
+			//cod_jackpot.setDetail_is_next_pay(0);
 			cod_jackpot.setDetail_type("jackpot");
 			cod_jackpot.setDetail_unit(1);
 			
@@ -457,14 +457,14 @@ public class CRMController {
 		if (customerOrder.getCustomerOrderDetails() != null) {
 			for (CustomerOrderDetail cod : customerOrder.getCustomerOrderDetails()) {
 				if ("hardware-router".equals(cod.getDetail_type())) {
-					cod.setDetail_is_next_pay(0);
+					//cod.setDetail_is_next_pay(0);
 					cod.setIs_post(0);
 					customerOrder.setHardware_post(customerOrder.getHardware_post() == null ? 1 : customerOrder.getHardware_post() + 1);
 					customerOrder.setOrder_total_price(customerOrder.getOrder_total_price() + cod.getDetail_price());
 				} else if ("pstn".equals(cod.getDetail_type()) 
 						|| "voip".equals(cod.getDetail_type())){
 					cod.setDetail_unit(1);
-					cod.setDetail_is_next_pay(1);
+					//cod.setDetail_is_next_pay(1);
 					customerOrder.setOrder_total_price(customerOrder.getOrder_total_price() + cod.getDetail_price());
 				}
 			}

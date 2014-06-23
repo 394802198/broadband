@@ -220,6 +220,9 @@
 	<bean id="radiusDataUsageImportCalculatorTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="radiusDataUsageImportCalculatorJob" />
 		<property name="cronExpression" value="0 0/45 * * * ?"></property>
+		<!-- 0 0/45 * * * ? -->
+		<!-- every 30 seconds -->
+		<!-- 0-59/30 * * * * ? -->
 	</bean>
 	<!-- END radiusDataUsageImportCalculator -->
 	

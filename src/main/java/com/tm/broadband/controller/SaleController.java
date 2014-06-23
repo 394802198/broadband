@@ -170,7 +170,7 @@ public class SaleController {
 				CustomerOrderDetail cod_trans = new CustomerOrderDetail();
 				cod_trans.setDetail_name("Broadband Transition");
 				cod_trans.setDetail_price(plan.getTransition_fee());
-				cod_trans.setDetail_is_next_pay(1);
+				//cod_trans.setDetail_is_next_pay(1);
 				cod_trans.setDetail_type("transition");
 				cod_trans.setDetail_unit(1);
 				
@@ -183,7 +183,7 @@ public class SaleController {
 				CustomerOrderDetail cod_conn = new CustomerOrderDetail();
 				cod_conn.setDetail_name("Broadband New Connection");
 				cod_conn.setDetail_price(plan.getPlan_new_connection_fee());
-				cod_conn.setDetail_is_next_pay(1);
+				//cod_conn.setDetail_is_next_pay(1);
 				cod_conn.setDetail_type("new-connection");
 				cod_conn.setDetail_unit(1);
 				
@@ -196,7 +196,7 @@ public class SaleController {
 				CustomerOrderDetail cod_jackpot = new CustomerOrderDetail();
 				cod_jackpot.setDetail_name("Broadband New Connection & Jackpot Installation");
 				cod_jackpot.setDetail_price(plan.getJackpot_fee());
-				cod_jackpot.setDetail_is_next_pay(1);
+				//cod_jackpot.setDetail_is_next_pay(1);
 				cod_jackpot.setDetail_type("jackpot");
 				cod_jackpot.setDetail_unit(1);
 				
@@ -213,8 +213,8 @@ public class SaleController {
 					cod_pstn.setDetail_name("Business Phone Line");
 				}
 				cod_pstn.setDetail_price(0d);
-				cod_pstn.setDetail_is_next_pay(0);
-				cod_pstn.setDetail_expired(new Date());
+				//cod_pstn.setDetail_is_next_pay(0);
+				//cod_pstn.setDetail_expired(new Date());
 				cod_pstn.setDetail_type("pstn");
 				cod_pstn.setDetail_unit(1);
 				cod_pstn.setPstn_number(customer.getCustomerOrder().getTransition_porting_number());
@@ -224,8 +224,8 @@ public class SaleController {
 			CustomerOrderDetail cod_hd = new CustomerOrderDetail();
 			cod_hd.setDetail_name("TP - LINK 150Mbps Wireless N ADSL2+ Modem Router(Free)");
 			cod_hd.setDetail_price(0d);
-			cod_hd.setDetail_is_next_pay(0);
-			cod_hd.setDetail_expired(new Date());
+			//cod_hd.setDetail_is_next_pay(0);
+			//cod_hd.setDetail_expired(new Date());
 			cod_hd.setDetail_unit(1);
 			cod_hd.setIs_post(0);
 			cod_hd.setDetail_type("hardware-router");
@@ -236,14 +236,14 @@ public class SaleController {
 		if (cods != null) {
 			for (CustomerOrderDetail cod : customer.getCustomerOrder().getCustomerOrderDetails()) {
 				if ("hardware-router".equals(cod.getDetail_type())) {
-					cod.setDetail_is_next_pay(0);
+					//cod.setDetail_is_next_pay(0);
 					cod.setIs_post(0);
 					customer.getCustomerOrder().setHardware_post(customer.getCustomerOrder().getHardware_post() == null ? 1 : customer.getCustomerOrder().getHardware_post() + 1);
 					customer.getCustomerOrder().setOrder_total_price(customer.getCustomerOrder().getOrder_total_price() + cod.getDetail_price());
 				} else if ("pstn".equals(cod.getDetail_type()) 
 						|| "voip".equals(cod.getDetail_type())){
 					cod.setDetail_unit(1);
-					cod.setDetail_is_next_pay(1);
+					//cod.setDetail_is_next_pay(1);
 					customer.getCustomerOrder().setOrder_total_price(customer.getCustomerOrder().getOrder_total_price() + cod.getDetail_price());
 				}
 			}
