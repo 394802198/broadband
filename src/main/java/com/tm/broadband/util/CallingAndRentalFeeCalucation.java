@@ -96,7 +96,7 @@ public class CallingAndRentalFeeCalucation {
 				}
 				ccr.setInvoice_id(ci.getId());
 				ccr.getParams().put("where", "last_rental_records");
-				ccr.getParams().put("clear_service_id", pstn_number);
+				ccr.getParams().put("clear_service_id", TMUtils.formatPhoneNumber(pstn_number));
 				ccr.getParams().put("invoice_id", null);
 				customerCallRecordMapper.updateCustomerCallRecord(ccr);
 			}

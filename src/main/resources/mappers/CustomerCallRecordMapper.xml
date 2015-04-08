@@ -342,12 +342,27 @@
 				</when>
 				<when test="params.where == 'last_rental_records'">
 					billing_description IN(
+						'Calling Numbers Presented - Minimum Charge',
 						'Call restrict with no Directory Access nat Res',
+						'Call restrict with directory access nat Res',
 						'Caller Display Monthly Charge per line Res',
 						'Call waiting nat Res',
 					  	'Faxability Monthly Rental Res',
 						'Smart Bundle package',
-						'Calling Numbers Presented - Minimum Charge'
+						'3 Way Calls Service Res',
+						'Call Minder with Call Forward Res',
+						'Call Minder-Charges-Standard SME 2 (with TPS)',
+						'Calling Numbers Presented - Minimum Charge',
+						'directory assistance',
+						'FaxAbility-Charges SME1',
+						'FaxAbility-Charges SME2',
+						'Smartphone Services-Call waiting SME2',
+						'S-Phone Call divert (call fwd No ans) SME2',
+						'S-Phone Call divert (call fwd Immed) SME2',
+						'S-Phone Call Restrict with Directory Access SM',
+						'Wire Maintenance',
+						'wire maintenance contract',
+						'Voice chat'
 					)
 					AND clear_service_id = #{params.clear_service_id}
 					<if test="params.invoice_id != null">
