@@ -34,7 +34,7 @@ public class SmserService implements Smser {
 			@SuppressWarnings({ "deprecation", "resource" })
 			HttpClient client = new DefaultHttpClient();
 			HttpGet pxpayRequest = new HttpGet(
-					"http://116.12.56.39/goip/en/dosend.php?USERNAME=root&PASSWORD="
+					"http://101.98.13.138/goip/en/dosend.php?USERNAME=root&PASSWORD="
 							+ URLEncoder.encode("hitech12345^", "UTF-8")
 							+ "&smsprovider=1&smsnum="
 							+ cellphone
