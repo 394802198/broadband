@@ -2406,9 +2406,9 @@ public class CRMService {
 			
 //			System.out.println("isFirst: " + isFirst);
 			// If first invoice then add all order details into invoice details
-			System.out.println("----------------------------");
-			System.out.println("isFirst: "+isFirst);
-			System.out.println("----------------------------");
+//			System.out.println("----------------------------");
+//			System.out.println("isFirst: "+isFirst);
+//			System.out.println("----------------------------");
 			if(isFirst){
 				
 				if(cod.getDetail_type()!=null && "plan-term".equals(cod.getDetail_type())){
@@ -2464,9 +2464,9 @@ public class CRMService {
 						}
 					}
 					
-					System.out.println("cod.getDetail_type(): "+cod.getDetail_type());
-					System.out.println("\"plan-term\".equals(cod.getDetail_type()): "+"plan-term".equals(cod.getDetail_type()));
-					System.out.println("!isRegenerateInvoice: "+!isRegenerateInvoice);
+//					System.out.println("cod.getDetail_type(): "+cod.getDetail_type());
+//					System.out.println("\"plan-term\".equals(cod.getDetail_type()): "+"plan-term".equals(cod.getDetail_type()));
+//					System.out.println("!isRegenerateInvoice: "+!isRegenerateInvoice);
 					
 					if (cod.getDetail_type()!=null && "plan-term".equals(cod.getDetail_type()) && !isRegenerateInvoice && (co.getIs_ddpay()!=null && co.getIs_ddpay()==true)) {
 						
@@ -2475,28 +2475,28 @@ public class CRMService {
 						int nextInvoiceDay = -7;
 						Calendar calNextInvoiceDay = Calendar.getInstance();
 						
-						System.out.println("--------------------------------------");
-						System.out.println("calNextInvoiceDay: "+calNextInvoiceDay);
-						System.out.println("--------------------------------------");
+//						System.out.println("--------------------------------------");
+//						System.out.println("calNextInvoiceDay: "+calNextInvoiceDay);
+//						System.out.println("--------------------------------------");
 						calNextInvoiceDay.set(Calendar.DAY_OF_MONTH, 14);
 						
-						System.out.println("--------------------------------------");
-						System.out.println("calNextInvoiceDay: "+calNextInvoiceDay);
-						System.out.println("--------------------------------------");
+//						System.out.println("--------------------------------------");
+//						System.out.println("calNextInvoiceDay: "+calNextInvoiceDay);
+//						System.out.println("--------------------------------------");
 						calNextInvoiceDay.add(Calendar.MONTH, nextInvoiceMonth);
 						
-						System.out.println("--------------------------------------");
-						System.out.println("calNextInvoiceDay: "+calNextInvoiceDay);
-						System.out.println("--------------------------------------");
+//						System.out.println("--------------------------------------");
+//						System.out.println("calNextInvoiceDay: "+calNextInvoiceDay);
+//						System.out.println("--------------------------------------");
 						// update customer order's next invoice create day flag begin
 						co.setNext_invoice_create_date_flag(calNextInvoiceDay.getTime());
 						// update customer order's next invoice create day flag end
 
 						calNextInvoiceDay.add(Calendar.DAY_OF_MONTH, nextInvoiceDay);
 						
-						System.out.println("--------------------------------------");
-						System.out.println("calNextInvoiceDay: "+calNextInvoiceDay);
-						System.out.println("--------------------------------------");
+//						System.out.println("--------------------------------------");
+//						System.out.println("calNextInvoiceDay: "+calNextInvoiceDay);
+//						System.out.println("--------------------------------------");
 						// update customer order's next invoice create day begin
 						co.setNext_invoice_create_date(calNextInvoiceDay.getTime());
 						// update customer order's next invoice create day end
@@ -2628,31 +2628,27 @@ public class CRMService {
 					}
 					
 					// If is not regenerate invoice then update next invoice create data & flag
-//					if (!isRegenerateInvoice) {
-//						
-//						// if is next invoice then plus one month else plus unit month(s)
-//						int nextInvoiceMonth = !isFirst ? 1 : cod.getDetail_unit();
-//						int nextInvoiceDay = -7;
-//						Calendar calNextInvoiceDay = Calendar.getInstance();
-//						calNextInvoiceDay.setTime(isFirst 
-//									? (co.getOrder_using_start() != null 
-//										? co.getOrder_using_start() 
-//										: new Date()) 
-//									: co.getNext_invoice_create_date_flag());
-//						calNextInvoiceDay.add(Calendar.MONTH, nextInvoiceMonth);
-//						// update customer order's next invoice create day flag begin
-//						co.setNext_invoice_create_date_flag(calNextInvoiceDay.getTime());
-//						// update customer order's next invoice create day flag end
-//
-//						calNextInvoiceDay.add(Calendar.DAY_OF_MONTH, nextInvoiceDay);
-//						// update customer order's next invoice create day begin
-//						co.setNext_invoice_create_date(calNextInvoiceDay.getTime());
-//						// update customer order's next invoice create day end
-//						
-//						co.getParams().put("id", co.getId());
-//						
-//						this.customerOrderMapper.updateCustomerOrder(co);
-//					}
+					if (!isRegenerateInvoice) {
+						
+						// if is next invoice then plus one month else plus unit month(s)
+						int nextInvoiceMonth = 1;
+						int nextInvoiceDay = -7;
+						Calendar calNextInvoiceDay = Calendar.getInstance();
+						calNextInvoiceDay.setTime(co.getNext_invoice_create_date_flag());
+						calNextInvoiceDay.add(Calendar.MONTH, nextInvoiceMonth);
+						// update customer order's next invoice create day flag begin
+						co.setNext_invoice_create_date_flag(calNextInvoiceDay.getTime());
+						// update customer order's next invoice create day flag end
+
+						calNextInvoiceDay.add(Calendar.DAY_OF_MONTH, nextInvoiceDay);
+						// update customer order's next invoice create day begin
+						co.setNext_invoice_create_date(calNextInvoiceDay.getTime());
+						// update customer order's next invoice create day end
+						
+						co.getParams().put("id", co.getId());
+						
+						this.customerOrderMapper.updateCustomerOrder(co);
+					}
 
 				// Else if discount and unexpired then do add discount
 				} else if(cod.getDetail_type()!=null && "discount".equals(cod.getDetail_type()) && cod.getDetail_expired() != null && cod.getDetail_expired().getTime() >= System.currentTimeMillis()){
