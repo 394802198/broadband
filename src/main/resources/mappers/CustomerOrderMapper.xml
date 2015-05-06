@@ -484,7 +484,7 @@
 					</if>
 				</when>
 				<when test="params.where == 'by_invoice_delayed'">
-					next_invoice_create_date &lt; now() and order_status='using'
+					next_invoice_create_date &lt; curdate() and order_status='using'
 				</when>
 				<otherwise>
 					<if test="params.id != null">co.id = #{params.id}</if>
