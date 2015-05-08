@@ -3271,9 +3271,9 @@ public class CRMService {
 		totalAmountPayable = isBusiness ? TMUtils.bigMultiply(totalAmountPayable, 1.15) : totalAmountPayable;
 		
 		// If previous balance greater than 0 and customer_type equals to business
-		if(cpi!=null && cpi.getBalance()!=null && cpi.getBalance()>0 && (customerOrder.getCustomer_type()!=null && "business".equals(customerOrder.getCustomer_type()))){
-			totalAmountPayable = TMUtils.bigAdd(totalAmountPayable, cpi.getBalance());
-		}
+//		if(cpi!=null && cpi.getBalance()!=null && cpi.getBalance()>0 && (customerOrder.getCustomer_type()!=null && "business".equals(customerOrder.getCustomer_type()))){
+//			totalAmountPayable = TMUtils.bigAdd(totalAmountPayable, cpi.getBalance());
+//		}
 
 		ci.setAmount_payable(totalAmountPayable);
 		ci.setFinal_payable_amount(TMUtils.bigSub(totalAmountPayable, totalCreditBack));
