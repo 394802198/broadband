@@ -2948,6 +2948,25 @@ public class CRMService {
 		// Customer previous invoice
 		if (cpi != null && !ci.getId().equals(cpi.getId())) {
 			ci.setLast_invoice_id(cpi.getId());
+			
+			CustomerInvoice preCIQuery = new CustomerInvoice();
+			preCIQuery.getParams().put("order_id", customerOrder.getId());
+			List<CustomerInvoice> preCIsQuery = this.ciMapper.selectCustomerInvoices(preCIQuery);
+			
+			Double preCIPayable = 0d;
+			Double preCIPaid = 0d;
+			Double preCIBalance = 0d;
+			for (CustomerInvoice preCITemp : preCIsQuery)
+			{
+				preCIPayable = TMUtils.bigAdd(preCIPayable, preCITemp.getAmount_payable()!=null ? preCITemp.getAmount_payable() : 0d);
+				preCIPaid = TMUtils.bigAdd(preCIPaid, preCITemp.getAmount_paid()!=null ? preCITemp.getAmount_paid() : 0d);
+				preCIBalance = TMUtils.bigAdd(preCIBalance, preCITemp.getBalance()!=null ? preCITemp.getBalance() : 0d);
+			}
+			
+			cpi.setAmount_payable(preCIPayable);
+			cpi.setAmount_paid(preCIPaid);
+			cpi.setBalance(preCIBalance);
+			
 			ci.setLastCustomerInvoice(cpi);
 		} else {
 			cpi = null;

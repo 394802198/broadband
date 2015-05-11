@@ -379,9 +379,9 @@ public class InvoicePDFCreator extends ITextUtils {
         addCol(transactionTable, "Amount").colspan(2).font(ITextFont.arial_bold_9).paddingV(6F).alignH("r").o();
 
         // account filtering of last invoice begin
-        Double lastAmountPayable = this.getLastCustomerInvoice()!=null && this.getLastCustomerInvoice().getAmount_payable()!=null ? this.getLastCustomerInvoice().getAmount_payable() : 0.0;
-        Double lastFinalAmountPayable = this.getLastCustomerInvoice()!=null && this.getLastCustomerInvoice().getFinal_payable_amount()!=null ? this.getLastCustomerInvoice().getFinal_payable_amount() : 0.0;
-        Double lastAmountPaid = this.getLastCustomerInvoice()!=null && this.getLastCustomerInvoice().getAmount_paid()!=null ? this.getLastCustomerInvoice().getAmount_paid() : 0.0;
+        Double previousAmountPayable = this.getLastCustomerInvoice()!=null && this.getLastCustomerInvoice().getAmount_payable()!=null ? this.getLastCustomerInvoice().getAmount_payable() : 0.0;
+        Double previousFinalAmountPayable = this.getLastCustomerInvoice()!=null && this.getLastCustomerInvoice().getFinal_payable_amount()!=null ? this.getLastCustomerInvoice().getFinal_payable_amount() : 0.0;
+        Double previousAmountPaid = this.getLastCustomerInvoice()!=null && this.getLastCustomerInvoice().getAmount_paid()!=null ? this.getLastCustomerInvoice().getAmount_paid() : 0.0;
         
         // account filtering of last invoice end
 
@@ -391,31 +391,31 @@ public class InvoicePDFCreator extends ITextUtils {
         if(this.getLastCustomerInvoice()!=null){
         	
             // LAST INVOICE PAYABLE CASE
-        	addCol(transactionTable, TMUtils.retrieveMonthAbbrWithDate(this.getLastCustomerInvoice().getCreate_date())).colspan(2).font(ITextFont.arial_normal_8).indent(10F).o();
+        	addCol(transactionTable, TMUtils.retrieveMonthAbbrWithDate(this.getLastCustomerInvoice().getCreate_date())+" & all unpaids").colspan(2).font(ITextFont.arial_normal_8).indent(10F).o();
         	addCol(transactionTable, "Previous Invoice Total").colspan(colspan/2).font(ITextFont.arial_normal_8).o();
-        	addCol(transactionTable, "$ " + TMUtils.fillDecimalPeriod(String.valueOf(lastAmountPayable))).colspan(2).font(ITextFont.arial_normal_8).alignH("r").o();
+        	addCol(transactionTable, "$ " + TMUtils.fillDecimalPeriod(String.valueOf(previousAmountPayable))).colspan(2).font(ITextFont.arial_normal_8).alignH("r").o();
             
             // CURRENT INVOICE DISCOUNT CASE
         	addCol(transactionTable, "").colspan(2).font(ITextFont.arial_normal_8).indent(10F).o();
         	addCol(transactionTable, "Total Credit Back").colspan(colspan/2).font(ITextFont.arial_normal_8).o();
-        	addCol(transactionTable, "$ -" + TMUtils.fillDecimalPeriod(TMUtils.bigSub(lastAmountPayable, lastFinalAmountPayable))).colspan(2).font(ITextFont.arial_normal_8).indent(10F).alignH("r").o();
+        	addCol(transactionTable, "$ -" + TMUtils.fillDecimalPeriod(TMUtils.bigSub(previousAmountPayable, previousFinalAmountPayable))).colspan(2).font(ITextFont.arial_normal_8).indent(10F).alignH("r").o();
             
             // LAST INVOICE PAID CASE
         	addCol(transactionTable, TMUtils.retrieveMonthAbbrWithDate(this.getLastCustomerInvoice().getPaid_date())).colspan(2).font(ITextFont.arial_normal_8).indent(10F).o();
         	addCol(transactionTable, this.getLastCustomerInvoice().getPaid_type() != null ? this.getLastCustomerInvoice().getPaid_type() : "Amount Paid").colspan(colspan/2).font(ITextFont.arial_normal_8).o();
-        	addCol(transactionTable, "$ -" + TMUtils.fillDecimalPeriod(String.valueOf(lastAmountPaid <=0 ? 0 : lastAmountPaid))).colspan(2).font(ITextFont.arial_normal_8).alignH("r").o();
+        	addCol(transactionTable, "$ -" + TMUtils.fillDecimalPeriod(String.valueOf(previousAmountPaid <=0 ? 0 : previousAmountPaid))).colspan(2).font(ITextFont.arial_normal_8).alignH("r").o();
 
             // LAST INVOICE SEPARATOR LINE
         	addEmptyCol(transactionTable, 7);
         	addCol(transactionTable, " ").border("b", 1F).o();
 
             // LAST INVOICE TOTAL AMOUNT
-        	if(TMUtils.bigSub(lastFinalAmountPayable, lastAmountPaid) <= 0d){
+        	if(TMUtils.bigSub(previousFinalAmountPayable, previousAmountPaid) <= 0d){
             	addCol(transactionTable, "Opening Balance").colspan(6).font(ITextFont.arial_bold_10).alignH("r").o();
-            	addCol(transactionTable, "$ "+ TMUtils.fillDecimalPeriod(String.valueOf(TMUtils.bigSub(lastFinalAmountPayable, lastAmountPaid)))).colspan(2).font(ITextFont.arial_bold_10).alignH("r").o();
+            	addCol(transactionTable, "$ "+ TMUtils.fillDecimalPeriod(String.valueOf(TMUtils.bigSub(previousFinalAmountPayable, previousAmountPaid)))).colspan(2).font(ITextFont.arial_bold_10).alignH("r").o();
         	} else {
             	addCol(transactionTable, "Opening Balance").colspan(6).font(ITextFont.arial_bold_red_10).alignH("r").o();
-            	addCol(transactionTable, "$ "+ TMUtils.fillDecimalPeriod(String.valueOf(TMUtils.bigSub(lastFinalAmountPayable, lastAmountPaid)))).colspan(2).font(ITextFont.arial_bold_red_10).alignH("r").o();
+            	addCol(transactionTable, "$ "+ TMUtils.fillDecimalPeriod(String.valueOf(TMUtils.bigSub(previousFinalAmountPayable, previousAmountPaid)))).colspan(2).font(ITextFont.arial_bold_red_10).alignH("r").o();
         	}
         	addEmptyCol(transactionTable, 10F, colspan);
             
