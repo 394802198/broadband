@@ -32,10 +32,17 @@ public class CallingRecordUtility_CallPlus {
 				if(header){ header=false; continue; }
 				// If contains
 				if(line.contains("\"")){
-//					System.out.println("line: "+line);
-					// Truncate middle part, generally referred to description
-					if(line.substring(line.indexOf("\"")+1, line.lastIndexOf("\"")).contains(",")){
-						line = line.replaceAll(",",".");
+					String lineTempMiddle = line.substring(line.indexOf("\"")+1, line.lastIndexOf("\""));
+					if(lineTempMiddle.contains(",")){
+//						System.out.println("line: "+line);
+//						System.out.println("lineTempMiddle: "+lineTempMiddle);
+						// Truncate front part
+						String lineTempFront = line.substring(0, line.indexOf("\""));
+						// Truncate back part
+						String lineTempBack = line.substring(line.lastIndexOf("\"")+1, line.length());
+						// Process middle part
+						lineTempMiddle = lineTempMiddle.replaceAll(",", ".");
+						line = lineTempFront.concat(lineTempMiddle.concat(lineTempBack));
 					}
 				}
 				ccrs.add(getCustomerCallingRecordCallplus(line));
