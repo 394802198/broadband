@@ -2268,6 +2268,35 @@ public class CRMService {
 		if(ci!=null && ci.getId()!=null){
 			this.ciDetailMapper.deleteCustomerInvoiceDetailByInvoiceId(ci.getId());
 		}
+		// Customer previous invoice
+		if (cpi != null && !ci.getId().equals(cpi.getId())) {
+			ci.setLast_invoice_id(cpi.getId());
+			
+			CustomerInvoice preCIQuery = new CustomerInvoice();
+			preCIQuery.getParams().put("order_id", co.getId());
+			List<CustomerInvoice> preCIsQuery = this.ciMapper.selectCustomerInvoices(preCIQuery);
+			
+			Double preCIPayable = 0d;
+			Double preCIFinalPayable = 0d;
+			Double preCIPaid = 0d;
+			Double preCIBalance = 0d;
+			for (CustomerInvoice preCITemp : preCIsQuery)
+			{
+				preCIPayable = TMUtils.bigAdd(preCIPayable, preCITemp.getAmount_payable()!=null ? preCITemp.getAmount_payable() : 0d);
+				preCIFinalPayable = TMUtils.bigAdd(preCIFinalPayable, preCITemp.getFinal_payable_amount()!=null ? preCITemp.getFinal_payable_amount() : 0d);
+				preCIPaid = TMUtils.bigAdd(preCIPaid, preCITemp.getAmount_paid()!=null ? preCITemp.getAmount_paid() : 0d);
+				preCIBalance = TMUtils.bigAdd(preCIBalance, preCITemp.getBalance()!=null ? preCITemp.getBalance() : 0d);
+			}
+			
+			cpi.setAmount_payable(preCIPayable);
+			cpi.setFinal_payable_amount(preCIFinalPayable);
+			cpi.setAmount_paid(preCIPaid);
+			cpi.setBalance(preCIBalance);
+			
+			ci.setLastCustomerInvoice(cpi);
+		} else {
+			cpi = null;
+		}
 		ci.setAmount_paid(ci.getAmount_paid()!=null ? ci.getAmount_paid() : 0d);
 		ci.setAmount_payable(ci.getAmount_payable()!=null ? ci.getAmount_payable() : 0d);
 		ci.setBalance(ci.getBalance()!=null ? ci.getBalance() : 0d);
@@ -2840,7 +2869,7 @@ public class CRMService {
 		}
 
 		invoicePDF.setCurrentCustomerInvoice(ci);
-
+		
 		// set file path
 		Map<String, Object> map = null;
 		try {
@@ -2952,18 +2981,21 @@ public class CRMService {
 			CustomerInvoice preCIQuery = new CustomerInvoice();
 			preCIQuery.getParams().put("order_id", customerOrder.getId());
 			List<CustomerInvoice> preCIsQuery = this.ciMapper.selectCustomerInvoices(preCIQuery);
-			
+
 			Double preCIPayable = 0d;
+			Double preCIFinalPayable = 0d;
 			Double preCIPaid = 0d;
 			Double preCIBalance = 0d;
 			for (CustomerInvoice preCITemp : preCIsQuery)
 			{
 				preCIPayable = TMUtils.bigAdd(preCIPayable, preCITemp.getAmount_payable()!=null ? preCITemp.getAmount_payable() : 0d);
+				preCIFinalPayable = TMUtils.bigAdd(preCIFinalPayable, preCITemp.getFinal_payable_amount()!=null ? preCITemp.getFinal_payable_amount() : 0d);
 				preCIPaid = TMUtils.bigAdd(preCIPaid, preCITemp.getAmount_paid()!=null ? preCITemp.getAmount_paid() : 0d);
 				preCIBalance = TMUtils.bigAdd(preCIBalance, preCITemp.getBalance()!=null ? preCITemp.getBalance() : 0d);
 			}
 			
 			cpi.setAmount_payable(preCIPayable);
+			cpi.setFinal_payable_amount(preCIFinalPayable);
 			cpi.setAmount_paid(preCIPaid);
 			cpi.setBalance(preCIBalance);
 			
